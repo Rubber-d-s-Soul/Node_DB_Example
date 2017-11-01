@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <p>DBのリストは、<%=dbList %></p>
+    <form method="post" action="/couchdb/createdb">
+        <input type="text" name="dbname">
+        <input type="submit"> 
+    </form>
+    <a href="/">Back to Top</a>
+  </body>
+</html>
