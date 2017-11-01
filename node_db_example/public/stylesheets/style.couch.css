@@ -1,0 +1,17 @@
+body {
+    color: #fff;
+    background-color: #9e9e9e;
+}
+
+span.card-title {
+    color: #b71c1c;
+    font-weight: bold;
+}
+
+a.back_link {
+    color: white;
+}
+
+nav div.nav-wrapper ul>li {
+    background-color: #b71c1c;
+}

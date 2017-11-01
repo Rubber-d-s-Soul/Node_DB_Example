@@ -31,25 +31,28 @@ router.get('/', function(req, res, next) {
     couchAuth.listDatabases().then(function(dbs) {
         console.log(dbs);
         dblist = dbs;
-        console.log(dblist[0]);
+        console.log(dblist);
         var data = {
             'title': 'CouchDB',
-            'dbList': dblist[0]
+            'dbList': dblist
         };
 
         console.log(data);
         res.render('couchdb', data);
     });
-
 });
 
 
 router.post('/createdb', function(req, res, next) {
     var dbList = "";
-    //※keyを決め打ちで渡してしまっています。
-    couchAuth.get("seminar_doc", "896e429bba15533c7fc0a7f050001f23").then(({ data, headers, status }) => {
+    console.log(req.body.dbselect);
+    var dbname = req.body.dbselect;
+    var dbname_view = dbname.replace("_db", "");
+    var viewUrl = "_design/" + dbname_view + "_view" + "/_view/get_all";
+    console.log(viewUrl);
+    couchAuth.get(dbname, viewUrl).then(({ data, headers, status }) => {
         console.log(data);
-        dbList = data.title;
+        dbList = data.rows;
         console.log(dbList);
         // data is json response 
         // headers is an object with all response headers 
@@ -66,7 +69,6 @@ router.post('/createdb', function(req, res, next) {
         // ...or err.code=EDOCMISSING if document is missing 
         // ...or err.code=EUNKNOWN if statusCode is unexpected 
     });
-
 })
 
 
