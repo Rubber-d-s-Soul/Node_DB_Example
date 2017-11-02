@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        <%= title %>
+    </title>
+    <%- include('./common/cssjs.ejs') %>
+    <link rel='stylesheet' href='/stylesheets/style.couch.css' />
+</head>
+
+<body>
+ <%- include('./common/header.ejs') %>
+    <div class="container">
+        <div class="row">
+            <div class="col s10 offset-s1">
+                <div class="card grey darken-3">
+                    <div class="card-content white-text">
+                        <span class="card-title"><%= title %></span>
+                        <p><%= dbname %> の操作を行います</p>
+                        <p><%= msg%></p>
+                        <br/>
+                        <% if(dbList !== null) { %>
+                             <table class="bordered highlight  grey darken-2" >
+                             <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Title</th>
+                                    </tr>    
+                             <thead>
+                            <tbody> 
+                                    <% dbList.forEach(function(dbname) { %>
+                                    <tr>
+                                    <td><%= dbname.id %></td>
+                                    <td><%= dbname.value %></td>
+                                    <tr>
+                                    <% }); %>
+                            <tbody>
+                            </table>
+                       <% } %>
+                       <br/>
+                    </div>
+                  </div>
+                </div>
+                </div>
+                </div>
+             <div class="row">
+            <div class="col s4">
+                <div class="card grey darken-3">
+                    <div class="card-content white-text">
+                    <span class="card-title">Create Document</span>
+                    <p>Documentを作成します</p>
+                    <br/>
+                    <div class="input-field">
+                    <form method="post" action="/couchdb/createDoc">
+                        <input id="createDocName" type="text" name="createDocName" class="validate">
+                        <label for="title">title</label>
+                        <input type="submit" class="btn red darken-4" value="create">
+                    </form>
+                    </div>
+                    </div>
+                </div>
+            </div>
+             <div class="col s4">
+                <div class="card grey darken-3">
+                  <div class="card-content white-text">
+                        <span class="card-title">Update Document</span>
+                        <p>Documentを更新します</p>
+                        <div class="input-field">
+                    <form method="post" action="/couchdb/updateDoc">
+                        <input id="createDocName" type="text" name="createDocName" class="validate">
+                        <label for="title">title</label>
+                            <% if(dbList !== null) { %>
+                            <select class="dbselect" name="dbselect">
+                                    <option value="" disabled selected>Choose Update Document</option>
+                                    <% dbList.forEach(function(dbname) { %>
+                                     <option value="<%= dbname.key %>"><%= dbname.value %></option>
+                                    <% }); %>
+                            </select>
+                            <% } %>
+                        <input type="submit" class="btn red darken-4" value="update">
+                    </form>
+                    </div>
+                    </div>
+                </div>
+            </div>
+             <div class="col s4">
+                <div class="card grey darken-3">
+                  <div class="card-content white-text">
+                    <span class="card-title">Delete Document</span>
+                    <p>Documentを削除します</p>
+                    <br/>
+                    <div class="input-field">
+                    <form method="post" action="/couchdb/deleteDoc">
+                     <% if(dbList !== null) { %>
+                        <select class="dbselect" name="dbselect">
+                                    <option value="" disabled selected>Choose Delete Document</option>
+                                    <% dbList.forEach(function(dbname) { %>
+                                     <option value="<%= dbname.key %>"><%= dbname.value %></option>
+                                    <% }); %>
+                            </select>
+                            <% } %>
+                        <input type="submit" class="btn red darken-4" value="delete">
+                    </form>
+                    </div>
+                 </div>
+                </div>
+             </div>
+            </div>
+            <a href="/" class="back_link">Back to Top</a>
+    </div>
+</body>
+
+</html>
+
+
+                          
+                             
+
+                               
+                         
+                           
+            

@@ -15,3 +15,7 @@ a.back_link {
 nav div.nav-wrapper ul>li {
     background-color: #b71c1c;
 }
+
+nav .brand-logo {
+    padding-left: 15px;
+}
