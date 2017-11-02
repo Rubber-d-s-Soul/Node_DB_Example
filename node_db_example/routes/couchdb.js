@@ -1,6 +1,7 @@
 /*couchDBのExampleです*/
 var express = require('express');
 var router = express.Router();
+const util = require('util');
 /**/
 const NodeCouchDb = require('node-couchdb');
 
@@ -100,9 +101,51 @@ router.post('/createDoc', function(req, res, next) {
 });
 
 /*Doc 更新*/
+router.post('/updateDoc', function(req, res, next) {
+    var data = req.body.updateSelect;
+    var _id = data.id;
+    var _rev = data.rev;
+    var newtitledata = req.body['createDocName'];
+    console.log("[ couch update ]");
+    console.log("[title] : " + newtitledata);
 
+    couchAuth.update(dbname, {
+        _id: id,
+        _rev: rev,
+        title: newtitleData
+    }).then(({ data, headers, status }) => {
+        console.log("[couch updateDoc SUCCESS]");
+        console.log(status);
+
+    }, err => {
+        console.log("[couch updateDoc ERROR]");
+        console.log(err);
+
+    });
+});
 
 /*Doc 削除*/
+router.post('/deleteDoc', function(req, res, next) {
+    var data = req.body.deleteDoc;
+    console.log(data);
+
+
+    var _id = data.id;
+    var _rev = data.rev;;
+    console.log("[ couch delete ]");
+
+
+    couchAuth.del(dbname, _id, _rev).then(({ data, headers, status }) => {
+        console.log("[couch deleteDoc SUCCESS]");
+        console.log(status);
+
+    }, err => {
+        console.log("[couch deleteDoc ERROR]");
+        console.log(err);
+
+    });
+});
+
 
 module.exports = router;
 

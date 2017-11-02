@@ -32,7 +32,7 @@
                                     <% dbList.forEach(function(dbname) { %>
                                     <tr>
                                     <td><%= dbname.id %></td>
-                                    <td><%= dbname.value %></td>
+                                    <td><%= dbname.value.title %></td>
                                     <tr>
                                     <% }); %>
                             <tbody>
@@ -74,7 +74,7 @@
                             <select class="dbselect" name="dbselect">
                                     <option value="" disabled selected>Choose Update Document</option>
                                     <% dbList.forEach(function(dbname) { %>
-                                     <option value="<%= dbname.key %>"><%= dbname.value %></option>
+                                     <option value="<%= dbname.key %>"><%= dbname.value.title %></option>
                                     <% }); %>
                             </select>
                             <% } %>
@@ -92,11 +92,11 @@
                     <br/>
                     <div class="input-field">
                     <form method="post" action="/couchdb/deleteDoc">
-                     <% if(dbList !== null) { %>
-                        <select class="dbselect" name="dbselect">
+                    <% if(dbList !== null) { %>
+                            <select id="deleteDoc class="dbselect" name="deleteDoc">
                                     <option value="" disabled selected>Choose Delete Document</option>
                                     <% dbList.forEach(function(dbname) { %>
-                                     <option value="<%= dbname.key %>"><%= dbname.value %></option>
+                                     <option  id="<%= dbname.key %>"  value="<%= dbname.value.rev %>"><%= dbname.value.title %></option>
                                     <% }); %>
                             </select>
                             <% } %>
