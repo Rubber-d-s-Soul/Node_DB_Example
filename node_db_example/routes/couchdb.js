@@ -83,67 +83,77 @@ router.post('/cruddb', function(req, res, next) {
 
 /*Doc作成*/
 router.post('/createDoc', function(req, res, next) {
-    var titledata = req.body['createDocName'];
+    var data = req.body;
     console.log("[ couch createDoc ]");
-    console.log("[title] : " + titledata);
-
+    console.log("[title] : " + data.title);
+    var titledata = data.title;
+    var status;
+    var result = { "result": status };
     couchAuth.insert(dbname, {
         title: titledata
     }).then(({ data, headers, status }) => {
         console.log("[couch createDoc SUCCESS]");
         console.log("[ status ] : " + status);
-        // location.reload();
+        console.log(status);
+        status = true;
     }, err => {
         console.log("[couch createDoc ERROR]");
         console.log(err.body);
-        // location.reload();
+        status = false;
     });
+    res.send(result);
 });
 
 /*Doc 更新*/
 router.post('/updateDoc', function(req, res, next) {
-    var data = req.body.updateSelect;
-    var _id = data.id;
-    var _rev = data.rev;
-    var newtitledata = req.body['createDocName'];
+    var data = req.body;
+    var id = data._id;
+    var rev = data._rev;
+    console.log(data);
+    var newtitledata = req.body.title;
     console.log("[ couch update ]");
     console.log("[title] : " + newtitledata);
+    var status;
+    var result = { "result": status };
 
     couchAuth.update(dbname, {
         _id: id,
         _rev: rev,
-        title: newtitleData
+        title: newtitledata
     }).then(({ data, headers, status }) => {
         console.log("[couch updateDoc SUCCESS]");
         console.log(status);
-
+        status = true;
     }, err => {
         console.log("[couch updateDoc ERROR]");
         console.log(err);
-
+        status = false;
     });
+    res.send(result);
 });
 
 /*Doc 削除*/
 router.post('/deleteDoc', function(req, res, next) {
-    var data = req.body.deleteDoc;
+    var data = req.body;
     console.log(data);
 
-
-    var _id = data.id;
-    var _rev = data.rev;;
+    var _id = data._id;
+    var _rev = data._rev;;
     console.log("[ couch delete ]");
 
+    var status;
+    var result = { "result": status };
 
     couchAuth.del(dbname, _id, _rev).then(({ data, headers, status }) => {
         console.log("[couch deleteDoc SUCCESS]");
         console.log(status);
-
+        status = true;
     }, err => {
         console.log("[couch deleteDoc ERROR]");
         console.log(err);
-
+        status = false;
     });
+    res.send(result);
 });
 
 

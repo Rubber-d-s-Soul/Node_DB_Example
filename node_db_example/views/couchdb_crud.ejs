@@ -52,11 +52,11 @@
                     <p>Documentを作成します</p>
                     <br/>
                     <div class="input-field">
-                    <form method="post" action="/couchdb/createDoc">
-                        <input id="createDocName" type="text" name="createDocName" class="validate">
+                    <form>
+                        <input id="createDocForm" type="text" name="createDocName" class="validate">
                         <label for="title">title</label>
-                        <input type="submit" class="btn red darken-4" value="create">
                     </form>
+                     <input id="create_btn" type="button" class="btn red darken-4" value="create">
                     </div>
                     </div>
                 </div>
@@ -67,19 +67,19 @@
                         <span class="card-title">Update Document</span>
                         <p>Documentを更新します</p>
                         <div class="input-field">
-                    <form method="post" action="/couchdb/updateDoc">
-                        <input id="createDocName" type="text" name="createDocName" class="validate">
+                    <form>
+                        <input id="updateDocForm" type="text"  class="validate">
                         <label for="title">title</label>
                             <% if(dbList !== null) { %>
-                            <select class="dbselect" name="dbselect">
+                            <select class="dbselect" name="updateDocName">
                                     <option value="" disabled selected>Choose Update Document</option>
                                     <% dbList.forEach(function(dbname) { %>
-                                     <option value="<%= dbname.key %>"><%= dbname.value.title %></option>
+                                     <option  id="<%= dbname.key %>"  value="<%= dbname.value.rev %>"><%= dbname.value.title %></option>
                                     <% }); %>
                             </select>
                             <% } %>
-                        <input type="submit" class="btn red darken-4" value="update">
                     </form>
+                     <input id="update_btn" type="button" class="btn red darken-4" value="update">
                     </div>
                     </div>
                 </div>
@@ -91,17 +91,17 @@
                     <p>Documentを削除します</p>
                     <br/>
                     <div class="input-field">
-                    <form method="post" action="/couchdb/deleteDoc">
+                    <form>
                     <% if(dbList !== null) { %>
-                            <select id="deleteDoc class="dbselect" name="deleteDoc">
+                            <select id="deleteDoc class="dbselect" name="deleteDocName">
                                     <option value="" disabled selected>Choose Delete Document</option>
                                     <% dbList.forEach(function(dbname) { %>
                                      <option  id="<%= dbname.key %>"  value="<%= dbname.value.rev %>"><%= dbname.value.title %></option>
                                     <% }); %>
                             </select>
                             <% } %>
-                        <input type="submit" class="btn red darken-4" value="delete">
                     </form>
+                    <input id="delete_btn" type="button" class="btn red darken-4" value="delete">
                     </div>
                  </div>
                 </div>
@@ -110,7 +110,8 @@
             <a href="/" class="back_link">Back to Top</a>
     </div>
 </body>
-
+    <script src="/javascripts/common.js"></script>
+    <script src="/javascripts/couch_crud.js"></script>
 </html>
 
 
